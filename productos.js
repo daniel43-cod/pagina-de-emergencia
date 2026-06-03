@@ -50,9 +50,17 @@ function mostrarProductos() {
                 <img src="${producto.imagen}" onerror="this.src='https://via.placeholder.com/150?text=Sin+imagen'">
                 <h3>${producto.nombre}</h3>
                 <p>Q${producto.precio.toFixed(2)}</p>
-                <button class="btn-eliminar" onclick="eliminarProducto(${producto.id})">
-                    Eliminar
-                </button>
+               <div class="acciones">
+    <button class="btn-modificar"
+        onclick="modificarProducto(${producto.id})">
+        Modificar
+    </button>
+
+    <button class="btn-eliminar"
+        onclick="eliminarProducto(${producto.id})">
+        Eliminar
+    </button>
+</div>
             </div>
         `;
     });
@@ -71,3 +79,39 @@ function limpiarFormulario() {
 }
 
 mostrarProductos();
+
+function modificarProducto(id) {
+
+    let producto =
+        productos.find(p => p.id === id);
+
+    let nuevoNombre =
+        prompt(
+            "Nuevo nombre:",
+            producto.nombre
+        );
+
+    if(nuevoNombre === null)
+        return;
+
+    let nuevoPrecio =
+        prompt(
+            "Nuevo precio:",
+            producto.precio
+        );
+
+    if(nuevoPrecio === null)
+        return;
+
+    producto.nombre = nuevoNombre;
+    producto.precio = parseFloat(nuevoPrecio);
+
+    localStorage.setItem(
+        "productos",
+        JSON.stringify(productos)
+    );
+
+    mostrarProductos();
+
+    alert("Producto actualizado");
+}

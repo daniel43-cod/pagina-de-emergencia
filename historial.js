@@ -16,6 +16,7 @@ function mostrarHistorial() {
                 <td><button onclick="verDetalle(${index})">Ver detalle</button></td>
                 <td><button onclick="generarPDF(${index})">Generar PDF</button></td>
                 <td><button onclick="compartirWhatsApp(${index})">Compartir</button></td>
+                <td><button onclick="imprimirTicket(${index})">Imprimir</button></td>
             </tr>
 
             <tr id="detalle-${index}" style="display:none;">
@@ -58,29 +59,57 @@ function verDetalle(index) {
 
 function generarPDF(index) {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+
+    const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "letter"
+    });
 
     let venta = ventas[index];
 
-    doc.setFontSize(16);
-    doc.text("Detalle de Venta", 20, 20);
+    doc.setFontSize(18);
+    doc.text("DETALLE DE VENTA", 105, 20, { align: "center" });
 
     doc.setFontSize(12);
-    doc.text(`Cliente: ${venta.cliente}`, 20, 35);
-    doc.text(`Fecha: ${venta.fecha}`, 20, 45);
+    doc.text(`Cliente: ${venta.cliente}`, 20, 40);
+    doc.text(`Fecha: ${venta.fecha}`, 20, 50);
 
-    let y = 60;
+    doc.line(20, 58, 195, 58);
+
+    doc.setFontSize(11);
+    doc.text("Producto", 20, 68);
+    doc.text("Cantidad", 95, 68);
+    doc.text("Precio", 125, 68);
+    doc.text("Subtotal", 160, 68);
+
+    doc.line(20, 72, 195, 72);
+
+    let y = 82;
 
     venta.detalle.forEach(item => {
-        doc.text(
-            `${item.producto} | Cant: ${item.cantidad} | Q${item.subtotal.toFixed(2)}`,
-            20,
-            y
-        );
+        doc.text(item.producto, 20, y);
+        doc.text(String(item.cantidad), 100, y);
+        doc.text(`Q${Number(item.precio).toFixed(2)}`, 125, y);
+        doc.text(`Q${Number(item.subtotal).toFixed(2)}`, 160, y);
+
         y += 10;
+
+        if (y > 240) {
+            doc.addPage();
+            y = 20;
+        }
     });
 
-    doc.text(`Total: Q${venta.total.toFixed(2)}`, 20, y + 10);
+    doc.line(20, y + 5, 195, y + 5);
+
+    doc.setFontSize(14);
+    doc.text(
+        `TOTAL: Q${Number(venta.total).toFixed(2)}`,
+        195,
+        y + 18,
+        { align: "right" }
+    );
 
     doc.save(`venta_${venta.cliente}.pdf`);
 }
@@ -102,3 +131,180 @@ function compartirWhatsApp(index) {
 }
 
 mostrarHistorial();
+function imprimirTicket(index) {
+    let venta = ventas[index];
+
+    let contenido = `
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: monospace;
+                    width: 58mm;
+                    font-size: 12px;
+                }
+
+                h2 {
+                    text-align: center;
+                    margin: 5px 0;
+                }
+
+                .centrado {
+                    text-align: center;
+                }
+
+                .linea {
+                    border-top: 1px dashed #000;
+                    margin: 8px 0;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 11px;
+                }
+
+                td {
+                    padding: 2px 0;
+                }
+
+                .total {
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-align: right;
+                }
+
+                @media print {
+                    button {
+                        display: none;
+                    }
+
+                    body {
+                        margin: 0;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <h2>MI TIENDA</h2>
+            <p class="centrado">Ticket de venta</p>
+
+            <div class="linea"></div>
+
+            <p>Cliente: ${venta.cliente}</p>
+            <p>Fecha: ${venta.fecha}</p>
+
+            <div class="linea"></div>
+
+            <table>
+                ${venta.detalle.map(item => `
+                    <tr>
+                        <td>${item.producto}</td>
+                    </tr>
+                    <tr>
+                        <td>${item.cantidad} x Q${Number(item.precio).toFixed(2)}</td>
+                        <td style="text-align:right;">Q${Number(item.subtotal).toFixed(2)}</td>
+                    </tr>
+                `).join("")}
+            </table>
+
+            <div class="linea"></div>
+
+            <p class="total">TOTAL: Q${Number(venta.total).toFixed(2)}</p>
+
+            <div class="linea"></div>
+
+            <p class="centrado">Gracias por su compra</p>
+
+            <script>
+                window.onload = function() {
+                    window.print();
+                }
+            <\/script>
+        </body>
+        </html>
+    `;
+
+    let ventana = window.open("", "_blank");
+    ventana.document.write(contenido);
+    ventana.document.close();
+}
+
+function exportarVentasJSON() {
+
+    let ventas =
+        JSON.parse(localStorage.getItem("ventas")) || [];
+
+    let datos =
+        JSON.stringify(ventas, null, 2);
+
+    let blob =
+        new Blob([datos], {type:"application/json"});
+
+    let enlace =
+        document.createElement("a");
+
+    enlace.href =
+        URL.createObjectURL(blob);
+
+    enlace.download =
+        "ventas.json";
+
+    enlace.click();
+}
+
+function exportarVentasCSV() {
+
+    let ventas =
+        JSON.parse(localStorage.getItem("ventas")) || [];
+
+    let csv =
+        "Cliente,Fecha,Total\n";
+
+    ventas.forEach(v => {
+
+        csv +=
+        `"${v.cliente}","${v.fecha}",${v.total}\n`;
+
+    });
+
+    let blob =
+        new Blob([csv], {type:"text/csv"});
+
+    let enlace =
+        document.createElement("a");
+
+    enlace.href =
+        URL.createObjectURL(blob);
+
+    enlace.download =
+        "ventas.csv";
+
+        function borrarHistorial() {
+
+    let confirmar =
+        confirm("¿Desea eliminar todo el historial?");
+
+    if(!confirmar)
+        return;
+
+    localStorage.removeItem("ventas");
+
+    location.reload();
+}
+
+    enlace.click();
+}
+
+function borrarHistorial() {
+
+    let confirmar =
+        confirm("¿Desea eliminar todo el historial?");
+
+    if(!confirmar)
+        return;
+
+    localStorage.removeItem("ventas");
+
+    location.reload();
+}

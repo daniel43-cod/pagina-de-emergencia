@@ -47,11 +47,11 @@ nav a {
 nav a:hover { color: var(--texto); border-bottom-color: var(--gris-borde); }
 nav a[href*="productos"] { color: var(--azul); border-bottom-color: var(--azul); font-weight: 500; }
 
-/* ── Contenedor ── */
 .contenedor {
-  max-width: 720px;
-  margin: 2.5rem auto;
-  padding: 0 1.25rem;
+    width: 95%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
 }
 
 h1 {

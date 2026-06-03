@@ -53,9 +53,10 @@ nav a[href*="ventas"] { color: var(--azul); border-bottom-color: var(--azul); fo
 
 /* ── Contenedor principal ── */
 .contenedor {
-  max-width: 720px;
-  margin: 2.5rem auto;
-  padding: 0 1.25rem;
+    width: 95%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
 }
 
 
