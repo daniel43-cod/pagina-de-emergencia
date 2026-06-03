@@ -15,7 +15,7 @@ function mostrarHistorial() {
                 <td>Q${Number(venta.total).toFixed(2)}</td>
                 <td><button onclick="verDetalle(${index})">Ver detalle</button></td>
                 <td><button onclick="generarPDF(${index})">Generar PDF</button></td>
-                <td><button onclick="Modificar(${index})">Modificar</button></td>
+                <td><button onclick="modificarVenta(${index})">Modificar</button></td>
                 <td><button onclick="imprimirTicket(${index})">Imprimir</button></td>
             </tr>
 
@@ -310,17 +310,17 @@ function borrarHistorial() {
     location.reload();
 }
 
-function modificarVenta(index) {
+function modificarVenta(index){
 
     let venta = ventas[index];
 
     localStorage.setItem(
         "ventaEditar",
         JSON.stringify({
-            index: index,
-            venta: venta
+            index:index,
+            venta:venta
         })
     );
 
-    window.location.href = "ventas.html";
+    window.location.href = "index.html";
 }

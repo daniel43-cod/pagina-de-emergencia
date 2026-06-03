@@ -231,23 +231,13 @@ function guardarVenta(){
             0
         );
 
-    let venta = {
-
-        id:
-            Date.now(),
-
-        cliente:
-            cliente,
-
-        fecha:
-            new Date().toLocaleString(),
-
-        detalle:
-            detalleVenta,
-
-        total:
-            total
-    };
+        let venta = {
+          id: ventaEditar ? ventaEditar.venta.id : Date.now(),
+          cliente: cliente,
+          fecha: new Date().toLocaleString(),
+          detalle: detalleVenta,
+          total: total
+         };
 
     let ventas =
         JSON.parse(
@@ -256,23 +246,23 @@ function guardarVenta(){
 
         if(ventaEditar){
 
-    ventas[ventaEditar.index] = venta;
+         ventas[ventaEditar.index] = venta;
 
-    localStorage.removeItem("ventaEditar");
+         localStorage.removeItem("ventaEditar");
 
-}else{
+          }else{
 
-    ventas.push(venta);
+         ventas.push(venta);
 
-}
+          }
         
 
 
-    ventas.push(venta);
+    
 
-    localStorage.setItem(
-        "ventas",
-        JSON.stringify(ventas)
+           localStorage.setItem(
+           "ventas",
+            JSON.stringify(ventas)
     );
 
     localStorage.removeItem("ventaTemporal");
