@@ -41,26 +41,62 @@ function guardarEnLocalStorage(nombre, precio, imagen) {
 }
 
 function mostrarProductos() {
-    let lista = document.getElementById("listaProductos");
+
+    let lista =
+        document.getElementById("listaProductos");
+
     lista.innerHTML = "";
 
     productos.forEach(producto => {
+
+        let imagenHTML = "";
+
+        if (
+            producto.imagen &&
+            producto.imagen !== "sin-imagen.png" &&
+            producto.imagen !== ""
+        ) {
+
+            imagenHTML =
+                `<img src="${producto.imagen}" alt="${producto.nombre}">`;
+
+        } else {
+
+            imagenHTML =
+                `<div class="sin-imagen">
+                    Sin imagen
+                </div>`;
+        }
+
         lista.innerHTML += `
             <div class="card">
-                <img src="${producto.imagen}" onerror="this.src='https://via.placeholder.com/150?text=Sin+imagen'">
-                <h3>${producto.nombre}</h3>
-                <p>Q${producto.precio.toFixed(2)}</p>
-               <div class="acciones">
-    <button class="btn-modificar"
-        onclick="modificarProducto(${producto.id})">
-        Modificar
-    </button>
 
-    <button class="btn-eliminar"
-        onclick="eliminarProducto(${producto.id})">
-        Eliminar
-    </button>
-</div>
+                ${imagenHTML}
+
+                <h3>${producto.nombre}</h3>
+
+                <p>Q${Number(producto.precio).toFixed(2)}</p>
+
+                <div class="acciones">
+
+                    <button
+                        class="btn-modificar"
+                        onclick="modificarProducto(${producto.id})">
+
+                        Modificar
+
+                    </button>
+
+                    <button
+                        class="btn-eliminar"
+                        onclick="eliminarProducto(${producto.id})">
+
+                        Eliminar
+
+                    </button>
+
+                </div>
+
             </div>
         `;
     });

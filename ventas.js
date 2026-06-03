@@ -199,6 +199,9 @@ function quitarDetalle(index){
 
 function guardarVenta(){
 
+    let ventaEditar =
+    JSON.parse(localStorage.getItem("ventaEditar"));
+
     let cliente =
         document.getElementById("cliente").value.trim();
 
@@ -250,6 +253,20 @@ function guardarVenta(){
         JSON.parse(
             localStorage.getItem("ventas")
         ) || [];
+
+        if(ventaEditar){
+
+    ventas[ventaEditar.index] = venta;
+
+    localStorage.removeItem("ventaEditar");
+
+}else{
+
+    ventas.push(venta);
+
+}
+        
+
 
     ventas.push(venta);
 
@@ -310,4 +327,27 @@ function actualizarDescuento(index, valor){
 
     mostrarDetalle();
 }
+
+
+function cargarVentaEditar() {
+
+    let datosEditar =
+        JSON.parse(localStorage.getItem("ventaEditar"));
+
+    if(!datosEditar)
+        return;
+
+    let venta = datosEditar.venta;
+
+    document.getElementById("cliente").value =
+        venta.cliente;
+
+    detalleVenta = venta.detalle;
+
+    guardarVentaTemporal();
+
+    mostrarDetalle();
+}
+
 mostrarDetalle();
+cargarVentaEditar();
