@@ -115,3 +115,84 @@ function modificarProducto(id) {
 
     alert("Producto actualizado");
 }
+
+
+function exportarProductos() {
+
+    let productos =
+        JSON.parse(localStorage.getItem("productos")) || [];
+
+    if(productos.length === 0){
+        alert("No hay productos para exportar");
+        return;
+    }
+
+    let datos =
+        JSON.stringify(productos, null, 2);
+
+    let blob =
+        new Blob(
+            [datos],
+            { type: "application/json" }
+        );
+
+    let enlace =
+        document.createElement("a");
+
+    enlace.href =
+        URL.createObjectURL(blob);
+
+    enlace.download =
+        "productos.json";
+
+    enlace.click();
+
+    URL.revokeObjectURL(enlace.href);
+}
+function importarProductos() {
+    let archivo = document.getElementById("archivoImportar").files[0];
+
+    if (!archivo) {
+        alert("Seleccione un archivo JSON");
+        return;
+    }
+
+    let lector = new FileReader();
+
+    lector.onload = function(e) {
+        try {
+            let productosImportados = JSON.parse(e.target.result);
+
+            let productosActuales =
+                JSON.parse(localStorage.getItem("productos")) || [];
+
+            productosImportados.forEach(p => {
+                productosActuales.push({
+                    id: Date.now() + Math.floor(Math.random() * 1000),
+                    nombre: p.nombre,
+                    precio: Number(p.precio),
+                    imagen: p.imagen || "sin-imagen.png"
+                });
+            });
+
+            productos = productosActuales;
+
+            localStorage.setItem(
+                "productos",
+                JSON.stringify(productos)
+            );
+
+            mostrarProductos();
+
+
+document.getElementById("archivoImportar").value = "";
+
+            alert("Productos importados sin borrar los anteriores");
+        }
+        catch (error) {
+            alert("El archivo no es un JSON válido");
+        }
+    };
+
+    lector.readAsText(archivo);
+}
