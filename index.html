@@ -9,6 +9,7 @@
 <body>
 
 <nav>
+    <a href="categorias.html">Categorías</a>
     <a href="productos.html">Productos</a>
     <a href="index.html">Ventas</a>
     <a href="historial.html">Historial</a>
@@ -47,12 +48,14 @@
         <tbody id="detalleVenta"></tbody>
     </table>
 
-    <h2 id="totalVenta">Total: Q0.00</h2>
+<h2 id="totalVenta">Total: Q0.00</h2>
 
-    <button onclick="guardarVenta()">Guardar venta</button>
-
-    <div id="mensaje"></div>
+<div style="display: flex; gap: 10px; margin-top: 1rem;">
+  <button onclick="guardarVenta()" style="flex: 1; padding: 11px; font-size: 15px;">Guardar venta</button>
+  <button onclick="cancelarVenta()" style="padding: 11px; font-size: 15px; background: var(--gris-card); color: var(--rojo); border: 0.5px solid var(--rojo-borde);">Cancelar Venta o Modificación</button>
 </div>
+
+<div id="mensaje"></div>
 
 <script src="ventas.js"></script>
 </body>

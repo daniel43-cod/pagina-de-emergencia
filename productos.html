@@ -1,58 +1,85 @@
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Registrar Producto</title>
-        <link rel="stylesheet" href="producto.css">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Producto</title>
+    <link rel="stylesheet" href="producto.css">
+</head>
+<body>
 
-    </head>
-    <body>
+<nav>
+    <a href="categorias.html">Categorías</a>
+    <a href="productos.html">Registrar Producto</a>
+    <a href="index.html">Ventas</a>
+    <a href="historial.html">Historial</a>
+</nav>
 
-        <nav>
-            <a href="productos.html">Registrar Producto</a>
-            <a href="index.html">Ventas</a>
-            <a href="historial.html">Historial</a>
-        </nav>
-        <button onclick="exportarProductos()">
-    Exportar Productos JSON
-</button>
+<div class="contenedor">
 
-<button onclick="importarProductos()">
-    Importar Productos
-</button>
+    <h1>Registrar Producto</h1>
 
-<input type="file" id="archivoImportar" accept=".json">
+    <div class="formulario">
 
-        <div class="contenedor">
-            <h1>Registrar Producto</h1>
+        <label>Categoría del producto</label>
+        <select id="categoria"></select>
 
-            <div class="formulario">
-                <label>Nombre del producto</label>
-                <input type="text" id="nombre" placeholder="Ej: Coca Cola">
+        <label>Nombre del producto</label>
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Ej: Coca Cola">
 
-                <label>Precio</label>
-                <input type="number" id="precio" placeholder="Ej: 10">
+        <label>Precio</label>
+        <input
+            type="number"
+            id="precio"
+            placeholder="Ej: 10">
 
-                <label>Imagen del producto</label>
-                <input type="file" id="imagen" accept="image/*">
+        <label>Imagen del producto</label>
+        <input
+            type="file"
+            id="imagen"
+            accept="image/*">
 
-                <button onclick="guardarProducto()">Guardar Producto</button>
-            </div>
+        <button onclick="guardarProducto()">
+            Guardar Producto
+        </button>
 
-            <h2>Productos registrados</h2>
+    </div>
 
-            <h2>Productos registrados</h2>
-            <label>Buscar producto</label>
+    <hr>
 
-<input
-    type="text"
-    id="buscarProducto"
-    placeholder="Buscar producto..."
-    onkeyup="mostrarProductos()">
-            <div id="listaProductos" class="productos"></div>
-        </div>
+    <h2>Respaldos</h2>
 
-        <script src="productos.js"></script>
-    </body>
-    </html>
+    <button onclick="exportarProductos()">
+        Exportar Productos JSON
+    </button>
+
+    <input
+        type="file"
+        id="archivoImportar"
+        accept=".json">
+
+    <button onclick="importarProductos()">
+        Importar Productos
+    </button>
+
+    <hr>
+
+    <h2>Productos registrados</h2>
+
+    <label>Buscar producto</label>
+    <input
+        type="text"
+        id="buscarProducto"
+        placeholder="Buscar producto o categoría..."
+        onkeyup="mostrarProductos()">
+
+    <div id="listaProductos" class="productos"></div>
+
+</div>
+
+<script src="productos.js"></script>
+</body>
+</html>

@@ -165,14 +165,7 @@ button[onclick="agregarDetalle()"] {
   margin-bottom: 0.5rem;
 }
 
-/* Guardar venta */
-button[onclick="guardarVenta()"] {
-  margin-top: 1.25rem;
-  width: 100%;
-  justify-content: center;
-  padding: 11px;
-  font-size: 15px;
-}
+
 
 /* ── Botón quitar (tabla) ── */
 .btn-quitar {

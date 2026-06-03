@@ -281,6 +281,29 @@ function guardarVenta(){
     );
 }
 
+function cancelarVenta() {
+
+    if(!confirm("¿Desea cancelar la venta actual?")){
+        return;
+    }
+
+    document.getElementById("cliente").value = "";
+    document.getElementById("buscarProducto").value = "";
+    document.getElementById("cantidad").value = "";
+
+    detalleVenta = [];
+
+    localStorage.removeItem("ventaTemporal");
+    localStorage.removeItem("ventaEditar");
+
+    mostrarDetalle();
+
+    mostrarMensaje(
+        "Venta cancelada",
+        "orange"
+    );
+}
+
 function mostrarMensaje(texto,color){
 
     document.getElementById("mensaje").innerHTML =

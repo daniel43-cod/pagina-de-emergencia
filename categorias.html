@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías</title>
+    <link rel="stylesheet" href="categorias.css">
+</head>
+<body>
+
+<nav><a href="categorias.html">Categorías</a>
+    <a href="productos.html">Productos</a>
+    <a href="index.html">Ventas</a>
+    <a href="historial.html">Historial</a>
+</nav>
+
+<div class="contenedor">
+
+    <h1>Administrar Categorías</h1>
+
+    <div class="formulario">
+
+        <label>Nueva Categoría</label>
+
+        <input
+            type="text"
+            id="nuevaCategoria"
+            placeholder="Ej: Gaseosas">
+
+        <button onclick="guardarCategoria()">
+            Agregar Categoría
+        </button>
+
+    </div>
+
+    <hr>
+
+    <h2>Categorías Registradas</h2>
+
+    <div id="listaCategorias"></div>
+
+    <hr>
+
+    <h2>Productos de la Categoría</h2>
+
+    <div id="listaProductosCategoria">
+
+        <p>Seleccione una categoría y presione "Ver".</p>
+
+    </div>
+
+</div>
+
+<script src="categorias.js"></script>
+
+</body>
+</html>
