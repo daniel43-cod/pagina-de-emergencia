@@ -1,0 +1,251 @@
+/* ── Reset y base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul:        #185FA5;
+  --azul-claro:  #E6F1FB;
+  --azul-hover:  #0C447C;
+  --gris-borde:  #d3d1c7;
+  --gris-fondo:  #f5f4f0;
+  --gris-card:   #ffffff;
+  --texto:       #2c2c2a;
+  --texto-muted: #5f5e5a;
+  --verde-bg:    #eaf3de;
+  --verde-borde: #97c459;
+  --verde-texto: #3b6d11;
+  --rojo:        #a32d2d;
+  --radio:       10px;
+  --radio-lg:    14px;
+  --sombra:      0 2px 8px rgba(0,0,0,.06);
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--texto);
+  background: var(--gris-fondo);
+  min-height: 100vh;
+}
+
+/* ── Navegación ── */
+nav {
+  background: var(--gris-card);
+  border-bottom: 0.5px solid var(--gris-borde);
+  padding: 0 2rem;
+  display: flex;
+  gap: 4px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--texto-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+
+nav a:hover { color: var(--texto); border-bottom-color: var(--gris-borde); }
+nav a.activo,
+nav a[href*="ventas"] { color: var(--azul); border-bottom-color: var(--azul); font-weight: 500; }
+
+/* ── Contenedor principal ── */
+.contenedor {
+  max-width: 720px;
+  margin: 2.5rem auto;
+  padding: 0 1.25rem;
+}
+
+
+
+h1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--texto);
+  margin-bottom: 1.75rem;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--texto);
+  margin: 1.5rem 0 0.75rem;
+}
+
+/* ── Labels e inputs ── */
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--texto-muted);
+  margin-bottom: 4px;
+  margin-top: 1rem;
+}
+
+label:first-of-type { margin-top: 0; }
+
+input[type="text"],
+input[type="number"] {
+  display: block;
+  width: 100%;
+  padding: 9px 13px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--texto);
+  background: var(--gris-card);
+  border: 0.5px solid var(--gris-borde);
+  border-radius: var(--radio);
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover { border-color: #aaa; }
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(24,95,165,.15);
+}
+
+input::placeholder { color: #b4b2a9; }
+
+/* ── Sugerencias (autocomplete) ── */
+.sugerencias {
+  background: var(--gris-card);
+  border: 0.5px solid var(--gris-borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  margin-top: -6px;
+  margin-bottom: 12px;
+  box-shadow: var(--sombra);
+}
+
+.sugerencias div {
+  padding: 9px 13px;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 0.5px solid #ece9e2;
+  transition: background .1s;
+}
+
+.sugerencias div:last-child { border-bottom: none; }
+.sugerencias div:hover { background: var(--azul-claro); color: var(--azul-hover); }
+
+/* ── Botones ── */
+button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  border-radius: var(--radio);
+  cursor: pointer;
+  transition: background .15s, transform .08s;
+}
+
+button:active { transform: scale(0.98); }
+
+/* Botón primario */
+button:not(.btn-quitar) {
+  background: var(--azul);
+  color: #fff;
+  border: 0.5px solid var(--azul);
+}
+
+button:not(.btn-quitar):hover { background: var(--azul-hover); border-color: var(--azul-hover); }
+
+/* Agregar producto */
+button[onclick="agregarDetalle()"] {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Guardar venta */
+button[onclick="guardarVenta()"] {
+  margin-top: 1.25rem;
+  width: 100%;
+  justify-content: center;
+  padding: 11px;
+  font-size: 15px;
+}
+
+/* ── Botón quitar (tabla) ── */
+.btn-quitar {
+  background: none !important;
+  border: none !important;
+  color: var(--rojo);
+  padding: 4px 8px !important;
+  font-size: 18px;
+  border-radius: var(--radio) !important;
+  transition: background .15s !important;
+}
+
+.btn-quitar:hover { background: #fcebeb !important; }
+
+/* ── Tabla de detalle ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: var(--gris-card);
+  border: 0.5px solid var(--gris-borde);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+}
+
+thead tr { background: var(--gris-fondo); }
+
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--texto-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 0.5px solid var(--gris-borde);
+}
+
+td {
+  padding: 11px 14px;
+  border-bottom: 0.5px solid #ece9e2;
+  color: var(--texto);
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #fafaf8; }
+
+/* ── Total ── */
+#totalVenta {
+  text-align: right;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--texto);
+  margin-top: 1rem;
+}
+
+/* ── Mensaje de confirmación ── */
+#mensaje {
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+#mensaje:not(:empty) {
+  padding: 11px 14px;
+  border-radius: var(--radio);
+  background: var(--verde-bg);
+  border: 0.5px solid var(--verde-borde);
+  color: var(--verde-texto);
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  nav { padding: 0 1rem; }
+  nav a { padding: 12px 12px; font-size: 13px; }
+  .contenedor { margin: 1.25rem auto; }
+  h1 { font-size: 18px; }
+}

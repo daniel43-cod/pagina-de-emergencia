@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Ventas</title>
+    <link rel="stylesheet" href="historial.css">
+
+    <!-- Librería para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<nav>
+    <a href="productos.html">Productos</a>
+    <a href="index.html">Ventas</a>
+    <a href="historial.html">Historial</a>
+</nav>
+
+<div class="contenedor">
+    <h1>Historial de Ventas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Detalle</th>
+                <th>PDF</th>
+                <th>WhatsApp</th>
+            </tr>
+        </thead>
+        <tbody id="tablaHistorial"></tbody>
+    </table>
+</div>
+
+<script src="historial.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registrar Producto</title>
+        <link rel="stylesheet" href="producto.css">
+    </head>
+    <body>
+
+        <nav>
+            <a href="productos.html">Registrar Producto</a>
+            <a href="index.html">Ventas</a>
+            <a href="historial.html">Historial</a>
+        </nav>
+
+        <div class="contenedor">
+            <h1>Registrar Producto</h1>
+
+            <div class="formulario">
+                <label>Nombre del producto</label>
+                <input type="text" id="nombre" placeholder="Ej: Coca Cola">
+
+                <label>Precio</label>
+                <input type="number" id="precio" placeholder="Ej: 10">
+
+                <label>Imagen del producto</label>
+                <input type="file" id="imagen" accept="image/*">
+
+                <button onclick="guardarProducto()">Guardar Producto</button>
+            </div>
+
+            <h2>Productos registrados</h2>
+            <div id="listaProductos" class="productos"></div>
+        </div>
+
+        <script src="productos.js"></script>
+    </body>
+    </html>

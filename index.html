@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venta</title>
+    <link rel="stylesheet" href="ventas.css">
+</head>
+<body>
+
+<nav>
+    <a href="productos.html">Productos</a>
+    <a href="index.html">Ventas</a>
+    <a href="historial.html">Historial</a>
+</nav>
+
+<div class="contenedor">
+    <h1>Registrar Venta</h1>
+
+    <label>Nombre del cliente</label>
+    <input type="text" id="cliente" placeholder="Ingrese nombre del cliente">
+
+    <label>Buscar producto</label>
+    <input type="text" id="buscarProducto" placeholder="Ej: co" onkeyup="buscarProductos()">
+
+    <div id="sugerencias" class="sugerencias"></div>
+
+    <label>Cantidad</label>
+    <input type="number" id="cantidad" min="1" placeholder="Cantidad">
+
+    <button onclick="agregarDetalle()">Agregar a la venta</button>
+
+    <h2>Detalle de venta</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Quitar</th>
+            </tr>
+        </thead>
+        <tbody id="detalleVenta"></tbody>
+    </table>
+
+    <h2 id="totalVenta">Total: Q0.00</h2>
+
+    <button onclick="guardarVenta()">Guardar venta</button>
+
+    <div id="mensaje"></div>
+</div>
+
+<script src="ventas.js"></script>
+</body>
+</html>
