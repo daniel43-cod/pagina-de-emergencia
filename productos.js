@@ -42,12 +42,21 @@ function guardarEnLocalStorage(nombre, precio, imagen) {
 
 function mostrarProductos() {
 
+     let texto =
+        document.getElementById("buscarProducto")?.value
+        ?.toLowerCase()
+        ?.trim() || ""; 
+
     let lista =
         document.getElementById("listaProductos");
 
     lista.innerHTML = "";
 
-    productos.forEach(producto => {
+    let filtrados = productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(texto)
+    );
+
+    filtrados.forEach(producto => {
 
         let imagenHTML = "";
 
@@ -232,3 +241,4 @@ document.getElementById("archivoImportar").value = "";
 
     lector.readAsText(archivo);
 }
+
