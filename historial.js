@@ -69,7 +69,8 @@ function generarPDF(index) {
     let venta = ventas[index];
 
     doc.setFontSize(18);
-    doc.text("DETALLE DE VENTA", 105, 20, { align: "center" });
+    doc.text("DISTRIBUIDORA SAN ANTONIO", 105, 20, { align: "center" });
+    doc.text("TEL: 3264-3544 -- 3272-3676", 105, 28, { align: "center" });
 
     doc.setFontSize(12);
     doc.text(`Cliente: ${venta.cliente}`, 20, 40);
@@ -78,20 +79,20 @@ function generarPDF(index) {
     doc.line(20, 58, 195, 58);
 
     doc.setFontSize(11);
-    doc.text("Producto", 20, 68);
-    doc.text("Cantidad", 95, 68);
-    doc.text("Precio", 125, 68);
-    doc.text("Subtotal", 160, 68);
+   doc.text("Cantidad", 20, 68);
+doc.text("Producto", 50, 68);
+doc.text("Precio", 125, 68);
+doc.text("Subtotal", 160, 68);
 
     doc.line(20, 72, 195, 72);
 
     let y = 82;
 
     venta.detalle.forEach(item => {
-        doc.text(item.producto, 20, y);
-        doc.text(String(item.cantidad), 100, y);
-        doc.text(`Q${Number(item.precio).toFixed(2)}`, 125, y);
-        doc.text(`Q${Number(item.subtotal).toFixed(2)}`, 160, y);
+    doc.text(String(item.cantidad), 20, y);
+doc.text(item.producto, 50, y);
+doc.text(`Q${Number(item.precio).toFixed(2)}`, 125, y);
+doc.text(`Q${Number(item.subtotal).toFixed(2)}`, 160, y);
 
         y += 10;
 
