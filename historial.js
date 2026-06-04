@@ -58,6 +58,7 @@ function verDetalle(index) {
 }
 
 function generarPDF(index) {
+
     const { jsPDF } = window.jspdf;
 
     const doc = new jsPDF({
@@ -68,51 +69,123 @@ function generarPDF(index) {
 
     let venta = ventas[index];
 
+    // Encabezado
     doc.setFontSize(18);
-    doc.text("DISTRIBUIDORA SAN ANTONIO", 105, 20, { align: "center" });
-    doc.text("TEL: 3264-3544 -- 3272-3676", 105, 28, { align: "center" });
+    doc.text(
+        "DISTRIBUIDORA SAN ANTONIO",
+        105,
+        20,
+        { align: "center" }
+    );
 
     doc.setFontSize(12);
-    doc.text(`Cliente: ${venta.cliente}`, 20, 40);
-    doc.text(`Fecha: ${venta.fecha}`, 20, 50);
+    doc.text(
+        "TEL: 3264-3544 -- 3272-3676",
+        105,
+        28,
+        { align: "center" }
+    );
 
-    doc.line(20, 58, 195, 58);
+    // Datos de la venta
+    doc.setFontSize(12);
 
-    doc.setFontSize(11);
-   doc.text("Cantidad", 20, 68);
-doc.text("Producto", 50, 68);
-doc.text("Precio", 125, 68);
-doc.text("Subtotal", 160, 68);
+    doc.text(
+        `Cliente: ${venta.cliente}`,
+        20,
+        40
+    );
 
-    doc.line(20, 72, 195, 72);
+    doc.text(
+        `Fecha: ${venta.fecha}`,
+        20,
+        48
+    );
 
-    let y = 82;
+    // Línea
+    doc.line(
+        20,
+        58,
+        195,
+        58
+    );
+
+    // Encabezado tabla
+    doc.setFontSize(10);
+
+    doc.text("Cantidad", 20, 68);
+    doc.text("Producto", 40, 68);
+    doc.text("Precio", 125, 68);
+    doc.text("Subtotal", 160, 68);
+
+    doc.line(
+        20,
+        72,
+        195,
+        72
+    );
+
+    // Detalle
+    let y = 80;
 
     venta.detalle.forEach(item => {
-    doc.text(String(item.cantidad), 20, y);
-doc.text(item.producto, 50, y);
-doc.text(`Q${Number(item.precio).toFixed(2)}`, 125, y);
-doc.text(`Q${Number(item.subtotal).toFixed(2)}`, 160, y);
 
-        y += 10;
+        doc.text(
+            String(item.cantidad),
+            20,
+            y
+        );
+
+        doc.text(
+            item.producto,
+            40,
+            y
+        );
+
+        doc.text(
+            `Q${Number(item.precio).toFixed(2)}`,
+            125,
+            y
+        );
+
+        doc.text(
+            `Q${Number(item.subtotal).toFixed(2)}`,
+            160,
+            y
+        );
+
+        y += 6;
 
         if (y > 240) {
+
             doc.addPage();
+
             y = 20;
         }
     });
 
-    doc.line(20, y + 5, 195, y + 5);
+    // Línea antes del total
+    doc.line(
+        20,
+        y + 4,
+        195,
+        y + 4
+    );
 
+    // Total
     doc.setFontSize(14);
+
     doc.text(
         `TOTAL: Q${Number(venta.total).toFixed(2)}`,
         195,
-        y + 18,
-        { align: "right" }
+        y + 15,
+        {
+            align: "right"
+        }
     );
 
-    doc.save(`venta_${venta.cliente}.pdf`);
+    doc.save(
+        `venta_${venta.cliente}.pdf`
+    );
 }
 
 function compartirWhatsApp(index) {
