@@ -176,7 +176,7 @@ function generarPDF(index) {
 
     doc.text(
         `TOTAL: Q${Number(venta.total).toFixed(2)}`,
-        195,
+        155,
         y + 15,
         {
             align: "right"
