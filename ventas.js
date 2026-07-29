@@ -158,7 +158,15 @@ function mostrarDetalle(){
 
                 <td>Q${Number(item.precio).toFixed(2)}</td>
 
-                <td>${item.cantidad}</td>
+                <td>
+                    <input
+                       type="number"
+                       min="1"
+                       value="${item.cantidad}"
+                       class="input-cantidad"
+                       oninput="actualizarCantidad(${index}, this.value)"
+                       >
+                    </td>
 
                 <td>
                     <input
@@ -364,3 +372,32 @@ function cargarVentaEditar() {
 
 mostrarDetalle();
 cargarVentaEditar();
+
+function actualizarCantidad(index, valor){
+
+    let cantidad = parseInt(valor);
+
+    if(isNaN(cantidad) || cantidad <= 0){
+        cantidad = 1;
+    }
+
+    let item = detalleVenta[index];
+
+    item.cantidad = cantidad;
+
+    let subtotalBruto =
+        Number(item.precio) * Number(item.cantidad);
+
+    let descuento = Number(item.descuento) || 0;
+
+    if(descuento > subtotalBruto){
+        descuento = subtotalBruto;
+        item.descuento = descuento;
+    }
+
+    item.subtotal = subtotalBruto - descuento;
+
+    guardarVentaTemporal();
+
+    mostrarDetalle();
+}
